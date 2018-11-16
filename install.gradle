@@ -17,7 +17,7 @@ install {
                 artifactId 'goplayAds' // THE NAME OF YOUR MODULE
 
                 name 'goplayAds' // YOUR LIBRARY NAME
-                description 'A simple Android library to cross promote your apps, websites!' // YOUR LIBRARY DESCRIPTION
+                description 'Android library to cross promote GoPlay Games.' // YOUR LIBRARY DESCRIPTION
                 url 'https://github.com/gpgames/GoPlayAds' // YOUR SITE
 
                 licenses {

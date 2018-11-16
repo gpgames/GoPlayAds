@@ -32,7 +32,7 @@ bintray {
     pkg {
         repo = 'Maven'
         name = 'goplayAds'
-        desc = 'A simple Android library to cross promote your apps, websites!'
+        desc = 'Android library to cross promote GoPlay Games.'
         websiteUrl = 'https://github.com/gpgames/GoPlayAds'
         vcsUrl = 'https://github.com/gpgames/GoPlayAds.git'
         licenses = ["Apache-2.0"]
