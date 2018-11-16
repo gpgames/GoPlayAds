@@ -7,7 +7,7 @@ Primary Goal:
 <br/>To keep it Simple & including Ads support like AdMob's Ad (Native, Interstitial)
 
 ## Gradle
-[![Download](https://api.bintray.com/packages/goplay/maven/goplayAds/images/download.svg) ](https://bintray.com/goplay/Maven/goplayAds/_latestVersion)
+[![Download](https://api.bintray.com/packages/goplay/maven/goplayAds/images/download.svg) ](https://bintray.com/goplay/maven/goplayAds/_latestVersion)
 <br/>Adding GoPlayAds in your App - 
 ```gradle
 dependencies {
