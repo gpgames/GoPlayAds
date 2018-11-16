@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.goplay.ads">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+
+        <meta-data
+            android:name="com.goplay.ads.glide.GoPlayAdsGlideModule"
+            android:value="GlideModule" />
+
+        <activity
+            android:name=".GoPlayAdsInterstitial$InterstitialActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+    </application>
+
+</manifest>

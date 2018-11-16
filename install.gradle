@@ -1,0 +1,45 @@
+/*
+ * Created by GoPlay Games.
+ * @goplay.mobilegames
+ * Copyright (c) 2018.
+ */
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.goplay'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.goplay' // CREATE A GROUP ID FOR YOUR LIBRARY
+                artifactId 'goplayAds' // THE NAME OF YOUR MODULE
+
+                name 'goplayAds' // YOUR LIBRARY NAME
+                description 'A simple Android library to cross promote your apps, websites!' // YOUR LIBRARY DESCRIPTION
+                url 'https://github.com/gpgames/GoPlayAds' // YOUR SITE
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'gpgames' //YOUR ID
+                        name 'GoPlay Games' //YOUR NAME
+                        email 'goplay.inbox@gmail.com' //YOUR EMAIL
+                    }
+                }
+                scm {
+                    connection 'https://github.com/gpgames/GoPlayAds.git' // YOUR GIT REPO
+                    developerConnection 'https://github.com/gpgames/GoPlayAds.git' // YOUR GIT REPO
+                    url 'https://github.com/gpgames/GoPlayAds' // YOUR SITE
+
+                }
+            }
+        }
+    }
+}
