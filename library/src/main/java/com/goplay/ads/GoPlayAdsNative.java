@@ -21,8 +21,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.goplay.ads.helper.GoPlayAdsHelper;
 import com.goplay.ads.helper.JsonPullerTask;
 import com.goplay.ads.helper.RemoveJsonObjectCompat;
@@ -172,9 +172,9 @@ public class GoPlayAdsNative {
             if (dialogModal.getAppTitle().trim().equals("") || dialogModal.getAppDesc().trim().equals("")) throw new IllegalArgumentException("Title & description should not be Null or Blank.");
 
 
-            Glide.with(mContext).load(dialogModal.getIconUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            Glide.with(mContext).asBitmap().load(dialogModal.getIconUrl()).into(new SimpleTarget<Bitmap>() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable GlideAnimation<? super Bitmap> transition) {
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                     icon.setImageBitmap(resource);
                     if (dialogModal.getLargeImageUrl().trim().equals("")) {
                         isAdLoaded = true;
@@ -184,9 +184,9 @@ public class GoPlayAdsNative {
             });
 
             if (!dialogModal.getLargeImageUrl().trim().equals(""))
-                Glide.with(mContext).load(dialogModal.getLargeImageUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                Glide.with(mContext).asBitmap().load(dialogModal.getLargeImageUrl()).into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> glideAnimation) {
                         isAdLoaded = true;
                         if (headerImage != null) headerImage.setImageBitmap(resource);
                         if (mNativeAdListener != null) mNativeAdListener.onAdLoaded();

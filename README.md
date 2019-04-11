@@ -11,7 +11,7 @@ Primary Goal:
 <br/>Adding GoPlayAds in your App - 
 ```gradle
 dependencies {
-    implementation 'com.goplay:goplayAds:1.0.00'
+    implementation 'com.goplay:goplayAds:1.0.01'
 }
 ```
 

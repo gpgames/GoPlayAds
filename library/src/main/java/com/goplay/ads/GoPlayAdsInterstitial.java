@@ -21,8 +21,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.goplay.ads.helper.JsonPullerTask;
 import com.goplay.ads.listener.AdListener;
 import com.goplay.ads.modal.InterstitialModal;
@@ -100,9 +100,9 @@ public class GoPlayAdsInterstitial {
             if (lastLoaded == modalArrayList.size() - 1) lastLoaded = 0;
             else lastLoaded++;
 
-            Glide.with(mContext).load(modal.getInterstitialImageUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            Glide.with(mContext).asBitmap().load(modal.getInterstitialImageUrl()).into(new SimpleTarget<Bitmap>() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap glideBitmap, @Nullable GlideAnimation<? super Bitmap> transition) {
+                public void onResourceReady(@NonNull Bitmap glideBitmap, @Nullable Transition<? super Bitmap> transition) {
                     bitmap = glideBitmap;
                     if (mAdListener != null) mAdListener.onAdLoaded();
                     isAdLoaded = true;

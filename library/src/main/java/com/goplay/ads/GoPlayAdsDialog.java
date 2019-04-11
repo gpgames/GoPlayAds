@@ -32,10 +32,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.goplay.ads.helper.GoPlayAdsHelper;
 import com.goplay.ads.helper.JsonPullerTask;
 import com.goplay.ads.helper.RemoveJsonObjectCompat;
@@ -55,7 +57,7 @@ public class GoPlayAdsDialog {
 
     private boolean showHeader = true;
     private boolean forceLoadFresh = true;
-    private boolean hideIfAppInstalled  = true;
+    private boolean hideIfAppInstalled = true;
     private int cardCorner = 25;
     private int ctaCorner = 25;
     private static boolean isAdLoaded = false;
@@ -106,18 +108,18 @@ public class GoPlayAdsDialog {
         isAdLoaded = false;
         if (jsonUrl.trim().equals("")) throw new IllegalArgumentException("Url is Blank!");
         else {
-            if (forceLoadFresh || jsonRawResponse.equals("")) new JsonPullerTask(jsonUrl, new JsonPullerTask.JsonPullerListener() {
-                @Override
-                public void onPostExecute(String result) {
-                    if (!result.trim().equals("")) {
-                        jsonRawResponse = result;
-                        setUp(result);
+            if (forceLoadFresh || jsonRawResponse.equals(""))
+                new JsonPullerTask(jsonUrl, new JsonPullerTask.JsonPullerListener() {
+                    @Override
+                    public void onPostExecute(String result) {
+                        if (!result.trim().equals("")) {
+                            jsonRawResponse = result;
+                            setUp(result);
+                        } else {
+                            if (mAdListener != null) mAdListener.onAdLoadFailed();
+                        }
                     }
-                    else {
-                        if (mAdListener != null) mAdListener.onAdLoadFailed();
-                    }
-                }
-            }).execute();
+                }).execute();
             if (!forceLoadFresh && !jsonRawResponse.trim().equals("")) setUp(jsonRawResponse);
         }
     }
@@ -139,7 +141,7 @@ public class GoPlayAdsDialog {
                 final JSONObject jsonObject = array.getJSONObject(object);
 
 
-                if (hideIfAppInstalled && !jsonObject.optString("app_uri").startsWith("http") &&  GoPlayAdsHelper.isAppInstalled(mCompatActivity, jsonObject.optString("app_uri")))
+                if (hideIfAppInstalled && !jsonObject.optString("app_uri").startsWith("http") && GoPlayAdsHelper.isAppInstalled(mCompatActivity, jsonObject.optString("app_uri")))
                     new RemoveJsonObjectCompat(object, array).execute();
                 else {
                     //We Only Add Dialog Ones!
@@ -171,9 +173,12 @@ public class GoPlayAdsDialog {
 
             @SuppressLint("InflateParams") final View view = LayoutInflater.from(mCompatActivity).inflate(R.layout.dialog, null);
 
-            if (dialogModal.getIconUrl().trim().equals("") || !dialogModal.getIconUrl().trim().contains("http")) throw new IllegalArgumentException("Icon URL should not be Null or Blank & should start with \"http\"");
-            if (!dialogModal.getLargeImageUrl().trim().equals("") && !dialogModal.getIconUrl().trim().contains("http")) throw new IllegalArgumentException("Header Image URL should start with \"http\"");
-            if (dialogModal.getAppTitle().trim().equals("") || dialogModal.getAppDesc().trim().equals("")) throw new IllegalArgumentException("Title & description should not be Null or Blank.");
+            if (dialogModal.getIconUrl().trim().equals("") || !dialogModal.getIconUrl().trim().contains("http"))
+                throw new IllegalArgumentException("Icon URL should not be Null or Blank & should start with \"http\"");
+            if (!dialogModal.getLargeImageUrl().trim().equals("") && !dialogModal.getIconUrl().trim().contains("http"))
+                throw new IllegalArgumentException("Header Image URL should start with \"http\"");
+            if (dialogModal.getAppTitle().trim().equals("") || dialogModal.getAppDesc().trim().equals(""))
+                throw new IllegalArgumentException("Title & description should not be Null or Blank.");
 
 
             CardView cardView = view.findViewById(R.id.goplayAds_card_view);
@@ -191,45 +196,40 @@ public class GoPlayAdsDialog {
             TextView price = view.findViewById(R.id.goplayAds_price);
 
 
-            Glide.with(mCompatActivity).load(dialogModal.getIconUrl()).asBitmap().into(new SimpleTarget<Bitmap>(Integer.MIN_VALUE, Integer.MIN_VALUE) {
+            Glide.with(mCompatActivity)
+                    .asBitmap()
+                    .load(dialogModal.getIconUrl())
+                    .into(new SimpleTarget<Bitmap>(Integer.MIN_VALUE, Integer.MIN_VALUE) {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap glideBitmap, Transition<? super Bitmap> p2) {
+                            icon.setImageBitmap(glideBitmap);
+
+                            Palette palette = Palette.from(glideBitmap).generate();
+                            int dominantColor = palette.getDominantColor(ContextCompat.getColor(mCompatActivity, R.color.colorAccent));
+
+                            if (!showHeader) {
+                                isAdLoaded = true;
+                                if (mAdListener != null) mAdListener.onAdLoaded();
+                            }
+                            GradientDrawable drawable = (GradientDrawable) cta.getBackground();
+                            drawable.setColor(dominantColor);
+
+                            if (dialogModal.getRating() != 0) {
+                                ratings.setRating(dialogModal.getRating());
+                                Drawable ratingsDrawable = ratings.getProgressDrawable();
+                                DrawableCompat.setTint(ratingsDrawable, dominantColor);
+                            } else ratings.setVisibility(View.GONE);
+                        }
+                    });
+
+            if (!dialogModal.getLargeImageUrl().trim().equals("") && showHeader)
+                headerImage.setVisibility(View.VISIBLE);
+            Glide.with(mCompatActivity)
+                    .asBitmap()
+                    .load(dialogModal.getLargeImageUrl())
+                    .into(new SimpleTarget<Bitmap>() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap glideBitmap, GlideAnimation<? super Bitmap> p2) {
-                    icon.setImageBitmap(glideBitmap);
-
-                    Palette palette = Palette.from(glideBitmap).generate();
-                    int dominantColor = palette.getDominantColor(ContextCompat.getColor(mCompatActivity, R.color.colorAccent));
-
-                    if (!showHeader) {
-                        isAdLoaded = true;
-                        if (mAdListener != null) mAdListener.onAdLoaded();
-                    }
-                    GradientDrawable drawable = (GradientDrawable)  cta.getBackground();
-                    drawable.setColor(dominantColor);
-
-                    if (dialogModal.getRating() != 0) {
-                        ratings.setRating(dialogModal.getRating());
-                        Drawable ratingsDrawable = ratings.getProgressDrawable();
-                        DrawableCompat.setTint(ratingsDrawable, dominantColor);
-                    } else ratings.setVisibility(View.GONE);
-                }});
-
-            if (!dialogModal.getLargeImageUrl().trim().equals("") && showHeader) headerImage.setVisibility(View.VISIBLE);
-            Glide.with(mCompatActivity).load(dialogModal.getLargeImageUrl()).asBitmap().listener(new RequestListener<String, Bitmap>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-                    isAdLoaded = true;
-                    if (mAdListener != null) mAdListener.onAdLoaded();
-                    headerImage.setVisibility(View.GONE);
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    return false;
-                }
-            }).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable GlideAnimation<? super Bitmap> transition) {
+                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
                     if (showHeader) {
                         isAdLoaded = true;
                         if (mAdListener != null) mAdListener.onAdLoaded();
@@ -249,6 +249,7 @@ public class GoPlayAdsDialog {
             dialog = builder.create();
             //noinspection ConstantConditions
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setDimAmount(0.9f);
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialogInterface) {
@@ -277,8 +278,7 @@ public class GoPlayAdsDialog {
                     if (packageOrUrl.trim().startsWith("http")) {
                         mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(packageOrUrl)));
                         if (mAdListener != null) mAdListener.onApplicationLeft();
-                    }
-                    else {
+                    } else {
                         try {
                             mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageOrUrl)));
                             if (mAdListener != null) mAdListener.onApplicationLeft();

@@ -6,14 +6,14 @@
 
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.goplay'
+group = 'com.github.gpgames'
 
 install {
     repositories.mavenInstaller {
         pom {
             project {
                 packaging 'aar'
-                groupId 'com.goplay' // CREATE A GROUP ID FOR YOUR LIBRARY
+                groupId 'com.github.gpgames' // CREATE A GROUP ID FOR YOUR LIBRARY
                 artifactId 'goplayAds' // THE NAME OF YOUR MODULE
 
                 name 'goplayAds' // YOUR LIBRARY NAME
