@@ -6,49 +6,42 @@
 
 package com.goplay.ads;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.goplay.ads.helper.GoPlayAdsHelper;
 import com.goplay.ads.helper.JsonPullerTask;
 import com.goplay.ads.helper.RemoveJsonObjectCompat;
 import com.goplay.ads.listener.AdListener;
 import com.goplay.ads.modal.DialogModal;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.palette.graphics.Palette;
 
 public class GoPlayAdsDialog {
     private final Context mCompatActivity;
@@ -58,6 +51,7 @@ public class GoPlayAdsDialog {
     private boolean showHeader = true;
     private boolean forceLoadFresh = true;
     private boolean hideIfAppInstalled = true;
+    private boolean usePalette = true;
     private int cardCorner = 25;
     private int ctaCorner = 25;
     private static boolean isAdLoaded = false;
@@ -67,11 +61,8 @@ public class GoPlayAdsDialog {
 
     private static int lastLoaded = 0;
 
-    public GoPlayAdsDialog(Context context) {
+    public GoPlayAdsDialog(Context context, String url) {
         this.mCompatActivity = context;
-    }
-
-    public void setUrl(String url) {
         this.jsonUrl = url;
     }
 
@@ -104,23 +95,25 @@ public class GoPlayAdsDialog {
         this.hideIfAppInstalled = val;
     }
 
+    public void usePalette(boolean usePalette) {
+        this.usePalette = usePalette;
+    }
+
     public void loadAds() {
         isAdLoaded = false;
-        if (jsonUrl.trim().equals("")) throw new IllegalArgumentException("Url is Blank!");
+        if (jsonUrl.trim().isEmpty()) throw new IllegalArgumentException("Url is Blank!");
         else {
-            if (forceLoadFresh || jsonRawResponse.equals(""))
-                new JsonPullerTask(jsonUrl, new JsonPullerTask.JsonPullerListener() {
-                    @Override
-                    public void onPostExecute(String result) {
-                        if (!result.trim().equals("")) {
-                            jsonRawResponse = result;
-                            setUp(result);
-                        } else {
-                            if (mAdListener != null) mAdListener.onAdLoadFailed();
-                        }
+            if (forceLoadFresh || jsonRawResponse.isEmpty())
+                new JsonPullerTask(jsonUrl, result -> {
+                    if (!result.trim().isEmpty()) {
+                        jsonRawResponse = result;
+                        setUp(result);
+                    } else {
+                        if (mAdListener != null) mAdListener.onAdLoadFailed(new Exception("Null Response"));
                     }
                 }).execute();
-            if (!forceLoadFresh && !jsonRawResponse.trim().equals("")) setUp(jsonRawResponse);
+
+            if (!forceLoadFresh && !jsonRawResponse.trim().isEmpty()) setUp(jsonRawResponse);
         }
     }
 
@@ -128,7 +121,6 @@ public class GoPlayAdsDialog {
         if (dialog != null) dialog.show();
     }
 
-    @SuppressLint("NewApi")
     private void setUp(String response) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mCompatActivity);
         ArrayList<DialogModal> val = new ArrayList<>();
@@ -170,14 +162,13 @@ public class GoPlayAdsDialog {
             if (lastLoaded == val.size() - 1) lastLoaded = 0;
             else lastLoaded++;
 
+            final View view = View.inflate(mCompatActivity, R.layout.dialog, null);
 
-            @SuppressLint("InflateParams") final View view = LayoutInflater.from(mCompatActivity).inflate(R.layout.dialog, null);
-
-            if (dialogModal.getIconUrl().trim().equals("") || !dialogModal.getIconUrl().trim().contains("http"))
+            if (dialogModal.getIconUrl().trim().isEmpty() || !dialogModal.getIconUrl().trim().startsWith("http"))
                 throw new IllegalArgumentException("Icon URL should not be Null or Blank & should start with \"http\"");
-            if (!dialogModal.getLargeImageUrl().trim().equals("") && !dialogModal.getIconUrl().trim().contains("http"))
+            if (!dialogModal.getLargeImageUrl().trim().isEmpty() && !dialogModal.getLargeImageUrl().trim().startsWith("http"))
                 throw new IllegalArgumentException("Header Image URL should start with \"http\"");
-            if (dialogModal.getAppTitle().trim().equals("") || dialogModal.getAppDesc().trim().equals(""))
+            if (dialogModal.getAppTitle().trim().isEmpty() || dialogModal.getAppDesc().trim().isEmpty())
                 throw new IllegalArgumentException("Title & description should not be Null or Blank.");
 
 
@@ -196,52 +187,61 @@ public class GoPlayAdsDialog {
             TextView price = view.findViewById(R.id.goplayAds_price);
 
 
-            Glide.with(mCompatActivity)
-                    .asBitmap()
-                    .load(dialogModal.getIconUrl())
-                    .into(new SimpleTarget<Bitmap>(Integer.MIN_VALUE, Integer.MIN_VALUE) {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap glideBitmap, Transition<? super Bitmap> p2) {
-                            icon.setImageBitmap(glideBitmap);
-
-                            Palette palette = Palette.from(glideBitmap).generate();
-                            int dominantColor = palette.getDominantColor(ContextCompat.getColor(mCompatActivity, R.color.colorAccent));
-
-                            if (!showHeader) {
-                                isAdLoaded = true;
-                                if (mAdListener != null) mAdListener.onAdLoaded();
-                            }
-                            GradientDrawable drawable = (GradientDrawable) cta.getBackground();
-                            drawable.setColor(dominantColor);
-
-                            if (dialogModal.getRating() != 0) {
-                                ratings.setRating(dialogModal.getRating());
-                                Drawable ratingsDrawable = ratings.getProgressDrawable();
-                                DrawableCompat.setTint(ratingsDrawable, dominantColor);
-                            } else ratings.setVisibility(View.GONE);
-                        }
-                    });
-
-            if (!dialogModal.getLargeImageUrl().trim().equals("") && showHeader)
-                headerImage.setVisibility(View.VISIBLE);
-            Glide.with(mCompatActivity)
-                    .asBitmap()
-                    .load(dialogModal.getLargeImageUrl())
-                    .into(new SimpleTarget<Bitmap>() {
+            Picasso.get().load(dialogModal.getIconUrl()).into(icon, new Callback() {
                 @Override
-                public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
-                    if (showHeader) {
-                        isAdLoaded = true;
-                        if (mAdListener != null) mAdListener.onAdLoaded();
+                public void onSuccess() {
+                    isAdLoaded = true;
+                    if (mAdListener != null) mAdListener.onAdLoaded();
+
+                    if (icon.getVisibility() == View.GONE) icon.setVisibility(View.VISIBLE);
+                    int dominantColor = ContextCompat.getColor(mCompatActivity, R.color.colorAccent);
+                    if (usePalette) {
+                        Palette palette = Palette.from(((BitmapDrawable) (icon.getDrawable())).getBitmap()).generate();
+                        dominantColor = palette.getDominantColor(ContextCompat.getColor(mCompatActivity, R.color.colorAccent));
                     }
-                    headerImage.setImageBitmap(bitmap);
+
+                    GradientDrawable drawable = (GradientDrawable) cta.getBackground();
+                    drawable.setColor(dominantColor);
+
+                    if (dialogModal.getRating() > 0) {
+                        ratings.setRating(dialogModal.getRating());
+                        Drawable ratingsDrawable = ratings.getProgressDrawable();
+                        DrawableCompat.setTint(ratingsDrawable, dominantColor);
+                    } else ratings.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    isAdLoaded = false;
+                    if (mAdListener != null) mAdListener.onAdLoadFailed(e);
+                    icon.setVisibility(View.GONE);
                 }
             });
+
+            if (!dialogModal.getLargeImageUrl().trim().isEmpty() && showHeader) {
+                Picasso.get().load(dialogModal.getLargeImageUrl()).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        headerImage.setImageBitmap(bitmap);
+                        headerImage.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                        headerImage.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    }
+                });
+            } else headerImage.setVisibility(View.GONE);
+
 
             title.setText(dialogModal.getAppTitle());
             description.setText(dialogModal.getAppDesc());
             cta.setText(dialogModal.getCtaText());
-            if (dialogModal.getPrice().trim().equals("")) price.setVisibility(View.GONE);
+            if (dialogModal.getPrice().trim().isEmpty()) price.setVisibility(View.GONE);
             else price.setText(String.format("Price: %s", dialogModal.getPrice()));
 
 
@@ -249,52 +249,33 @@ public class GoPlayAdsDialog {
             dialog = builder.create();
             //noinspection ConstantConditions
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setDimAmount(0.9f);
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialogInterface) {
-                    if (mAdListener != null) mAdListener.onAdShown();
-                }
+            dialog.setOnShowListener(dialogInterface -> {
+                if (mAdListener != null) mAdListener.onAdShown();
             });
-            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    if (mAdListener != null) mAdListener.onAdClosed();
-                }
+            dialog.setOnCancelListener(dialogInterface -> {
+                if (mAdListener != null) mAdListener.onAdClosed();
             });
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    if (mAdListener != null) mAdListener.onAdClosed();
-                }
+            dialog.setOnDismissListener(dialogInterface -> {
+                if (mAdListener != null) mAdListener.onAdClosed();
             });
 
-            cta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
+            cta.setOnClickListener(view1 -> {
+                dialog.dismiss();
 
-                    String packageOrUrl = dialogModal.getPackageOrUrl();
-                    if (packageOrUrl.trim().startsWith("http")) {
-                        mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(packageOrUrl)));
+                String packageOrUrl = dialogModal.getPackageOrUrl();
+                if (packageOrUrl.trim().startsWith("http")) {
+                    mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(packageOrUrl)));
+                    if (mAdListener != null) mAdListener.onApplicationLeft();
+                } else {
+                    try {
+                        mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageOrUrl)));
                         if (mAdListener != null) mAdListener.onApplicationLeft();
-                    } else {
-                        try {
-                            mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageOrUrl)));
-                            if (mAdListener != null) mAdListener.onApplicationLeft();
-                        } catch (ActivityNotFoundException e) {
-                            if (mAdListener != null) mAdListener.onApplicationLeft();
-                            mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageOrUrl)));
-                        }
+                    } catch (ActivityNotFoundException e) {
+                        if (mAdListener != null) mAdListener.onApplicationLeft();
+                        mCompatActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageOrUrl)));
                     }
                 }
             });
         }
-
     }
-
 }
-
-
-
-

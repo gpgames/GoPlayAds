@@ -7,6 +7,7 @@
 package com.goplay.ads.helper;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class JsonPullerTask extends AsyncTask<String, String, String> {
     private String jsonUrl;
@@ -25,6 +26,7 @@ public class JsonPullerTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         listener.onPostExecute(result);
+        Log.d("Response", result);
     }
 
     public interface JsonPullerListener{

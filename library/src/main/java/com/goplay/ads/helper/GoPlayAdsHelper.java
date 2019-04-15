@@ -6,12 +6,8 @@
 
 package com.goplay.ads.helper;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-
-import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,6 +33,9 @@ public class GoPlayAdsHelper {
                     .get();
         } catch (IOException e) { e.printStackTrace(); }
 
+        //original
+        //if (doc != null) return doc.body().text();
+        //else return "";
 
         //noinspection ConstantConditions
         if (doc != null && !doc.body().text().trim().equals(""))
@@ -55,28 +54,5 @@ public class GoPlayAdsHelper {
             isInstalled = false;
         }
         return isInstalled;
-    }
-
-
-    @SuppressLint("StaticFieldLeak")
-    public static void clearGlideCache(final Context context) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                Glide.get(context).clearMemory();
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Glide.get(context).clearDiskCache();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-            }
-        }.execute();
     }
 }

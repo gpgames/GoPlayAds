@@ -29,7 +29,6 @@ public class RemoveJsonObjectCompat extends AsyncTask<JSONArray, JSONArray, JSON
         return removeJsonObject(index, jsonArray);
     }
 
-
     private JSONArray removeJsonObject(final int idx, final JSONArray from) {
         final List<JSONObject> objects = asList(from);
         objects.remove(idx);

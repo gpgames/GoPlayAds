@@ -35,18 +35,17 @@ public class GoPlayAdsNativeView {
         this.icon = icon;
     }
 
-    public void setHeaderImageView(ImageView headerImage) {
-        this.headerImage = headerImage;
-    }
-
     public void setCallToActionView(View cta) {
         this.cta = cta;
+    }
+
+    public void setHeaderImageView(ImageView headerImage) {
+        this.headerImage = headerImage;
     }
 
     public void setRatingsView(RatingBar ratings) {
         this.ratings = ratings;
     }
-
 
     //Getters
     public TextView getTitleView() {
@@ -65,12 +64,12 @@ public class GoPlayAdsNativeView {
         return icon;
     }
 
-    public ImageView getHeaderImageView() {
-        return headerImage;
-    }
-
     public View getCallToActionView() {
         return cta;
+    }
+
+    public ImageView getHeaderImageView() {
+        return headerImage;
     }
 
     public RatingBar getRatingsView() {
