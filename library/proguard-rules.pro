@@ -20,3 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class org.jsoup.**
+
+-keep class io.nivad.** { *; }
+-keep class com.auth0.jwt.** { *; }
+-dontwarn org.**
+-dontwarn javax.**
+-dontwarn com.auth0.jwt.**

@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class GoPlayAdsNativeView {
 
     private TextView title, description, price;
-    private ImageView icon, headerImage;
+    private ImageView icon;//, headerImage;
     private View cta;
     private RatingBar ratings;
 
@@ -39,9 +39,9 @@ public class GoPlayAdsNativeView {
         this.cta = cta;
     }
 
-    public void setHeaderImageView(ImageView headerImage) {
-        this.headerImage = headerImage;
-    }
+//    public void setHeaderImageView(ImageView headerImage) {
+//        this.headerImage = headerImage;
+//    }
 
     public void setRatingsView(RatingBar ratings) {
         this.ratings = ratings;
@@ -68,9 +68,9 @@ public class GoPlayAdsNativeView {
         return cta;
     }
 
-    public ImageView getHeaderImageView() {
-        return headerImage;
-    }
+//    public ImageView getHeaderImageView() {
+//        return headerImage;
+//    }
 
     public RatingBar getRatingsView() {
         return ratings;

@@ -16,6 +16,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.palette.graphics.Palette;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,10 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.palette.graphics.Palette;
 
 @SuppressWarnings("unused")
 public class GoPlayAdsNative {
@@ -145,7 +144,7 @@ public class GoPlayAdsNative {
 
             TextView title, description, price;
             final View cta;
-            final ImageView icon, headerImage;
+            final ImageView icon;//, headerImage;
             final RatingBar ratings;
 
 
@@ -190,7 +189,7 @@ public class GoPlayAdsNative {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                 cta.setBackground(new GradientDrawable());
                             } else {
-                                cta.setBackgroundDrawable(new GradientDrawable());
+                                //cta.setBackgroundDrawable(new GradientDrawable());
                                 Toast.makeText(mContext, "Error Setting Background", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -221,15 +220,15 @@ public class GoPlayAdsNative {
                 }
             });
 
-
+/*
             if (!dialogModal.getLargeImageUrl().trim().isEmpty())
                 Picasso.get().load(dialogModal.getLargeImageUrl()).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    //    if (headerImage != null) {
-                    //        headerImage.setVisibility(View.VISIBLE);
-                    //        headerImage.setImageBitmap(bitmap);
-                    //    }
+                        //if (headerImage != null) {
+                        //    headerImage.setVisibility(View.VISIBLE);
+                        //    headerImage.setImageBitmap(bitmap);
+                        //}
                         isAdLoaded = true;
                         if (mNativeAdListener != null) mNativeAdListener.onAdLoaded();
                     }
@@ -244,10 +243,11 @@ public class GoPlayAdsNative {
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                     }
                 });
+
             else {
                 //if (headerImage != null) headerImage.setVisibility(View.GONE);
             }
-
+*/
             title.setText(dialogModal.getAppTitle());
             description.setText(dialogModal.getAppDesc());
             if (price != null) {

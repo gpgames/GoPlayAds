@@ -14,8 +14,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.AnimRes;
-import android.support.annotation.Nullable;
+import androidx.annotation.AnimRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -29,8 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class GoPlayAdsInterstitial {
     private final Context mContext;

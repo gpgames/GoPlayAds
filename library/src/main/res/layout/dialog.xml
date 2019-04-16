@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-
         <ImageView
             android:id="@+id/goplayAds_header_image"
             android:layout_width="match_parent"
@@ -26,11 +25,11 @@
             android:contentDescription="@string/header_image" />
 
         <LinearLayout
-            android:layout_below="@+id/goplayAds_header_image"
             android:id="@+id/goplayAds_ad_asset_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_below="@+id/goplayAds_header_image"
             android:orientation="horizontal">
 
             <ImageView
