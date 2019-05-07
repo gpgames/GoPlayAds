@@ -45,7 +45,7 @@ import java.util.ArrayList;
 
 public class GoPlayAdsDialog {
     private final Context mCompatActivity;
-    private String jsonUrl;
+    private final String jsonUrl;
     private String jsonRawResponse = "";
 
     private boolean showHeader = true;
@@ -109,7 +109,8 @@ public class GoPlayAdsDialog {
                         jsonRawResponse = result;
                         setUp(result);
                     } else {
-                        if (mAdListener != null) mAdListener.onAdLoadFailed(new Exception("Null Response"));
+                        if (mAdListener != null)
+                            mAdListener.onAdLoadFailed(new Exception("Null Response"));
                     }
                 }).execute();
 
@@ -248,7 +249,7 @@ public class GoPlayAdsDialog {
             builder.setView(view);
             dialog = builder.create();
             //noinspection ConstantConditions
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setOnShowListener(dialogInterface -> {
                 if (mAdListener != null) mAdListener.onAdShown();
             });
@@ -277,5 +278,6 @@ public class GoPlayAdsDialog {
                 }
             });
         }
+
     }
 }

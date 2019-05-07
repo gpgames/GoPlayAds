@@ -45,7 +45,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class GoPlayAdsNative {
     private final Context mContext;
-    private String jsonUrl;
+    private final String jsonUrl;
 
     private boolean usePalette = true;
     private boolean isAdLoaded = false;
@@ -102,6 +102,7 @@ public class GoPlayAdsNative {
         }).execute();
     }
 
+
     private void setUp(String response) {
         ArrayList<DialogModal> val = new ArrayList<>();
 
@@ -144,7 +145,7 @@ public class GoPlayAdsNative {
 
             TextView title, description, price;
             final View cta;
-            final ImageView icon;//, headerImage;
+            final ImageView icon, headerImage;
             final RatingBar ratings;
 
 
@@ -155,7 +156,7 @@ public class GoPlayAdsNative {
                 price = view.getPriceView();
                 cta = view.getCallToActionView();
                 icon = view.getIconView();
-                //headerImage = view.getHeaderImageView();
+                headerImage = view.getHeaderImageView();
                 ratings = view.getRatingsView();
             } else {
                 if (customNativeView != null) {
@@ -164,10 +165,10 @@ public class GoPlayAdsNative {
                     price = customNativeView.findViewById(R.id.goplayAds_price);
                     cta = customNativeView.findViewById(R.id.goplayAds_cta);
                     icon = customNativeView.findViewById(R.id.goplayAds_app_icon);
-                    //headerImage = customNativeView.findViewById(R.id.goplayAds_header_image);
+                    headerImage = customNativeView.findViewById(R.id.goplayAds_header_image);
                     ratings = customNativeView.findViewById(R.id.goplayAds_rating);
                 } else
-                    throw new NullPointerException("NativeAdView is Null. Either pass GoPlayAdsNativeView or a View in setNativeAdView()");
+                    throw new NullPointerException("NativeAdView is Null. Either pass HouseAdsNativeView or a View in setNativeAdView()");
 
             }
             if (dialogModal.getIconUrl().trim().isEmpty() || !dialogModal.getIconUrl().trim().contains("http"))
@@ -186,12 +187,8 @@ public class GoPlayAdsNative {
                         int dominantColor = palette.getDominantColor(ContextCompat.getColor(mContext, R.color.colorAccent));
 
                         if (cta.getBackground() instanceof ColorDrawable) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                cta.setBackground(new GradientDrawable());
-                            } else {
-                                //cta.setBackgroundDrawable(new GradientDrawable());
-                                Toast.makeText(mContext, "Error Setting Background", Toast.LENGTH_LONG).show();
-                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) cta.setBackground(new GradientDrawable());
+                            else cta.setBackgroundDrawable(new GradientDrawable());
                         }
                         GradientDrawable drawable = (GradientDrawable) cta.getBackground();
                         drawable.setColor(dominantColor);
@@ -213,22 +210,21 @@ public class GoPlayAdsNative {
                 @Override
                 public void onError(Exception e) {
                     isAdLoaded = false;
-                    //if (headerImage == null || dialogModal.getLargeImageUrl().isEmpty()) {
-                    if (dialogModal.getLargeImageUrl().isEmpty()) {
+                    if (headerImage == null || dialogModal.getLargeImageUrl().isEmpty()) {
                         if (mNativeAdListener != null) mNativeAdListener.onAdLoadFailed(e);
                     }
                 }
             });
 
-/*
+
             if (!dialogModal.getLargeImageUrl().trim().isEmpty())
                 Picasso.get().load(dialogModal.getLargeImageUrl()).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        //if (headerImage != null) {
-                        //    headerImage.setVisibility(View.VISIBLE);
-                        //    headerImage.setImageBitmap(bitmap);
-                        //}
+                        if (headerImage != null) {
+                            headerImage.setVisibility(View.VISIBLE);
+                            headerImage.setImageBitmap(bitmap);
+                        }
                         isAdLoaded = true;
                         if (mNativeAdListener != null) mNativeAdListener.onAdLoaded();
                     }
@@ -243,11 +239,10 @@ public class GoPlayAdsNative {
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                     }
                 });
-
             else {
-                //if (headerImage != null) headerImage.setVisibility(View.GONE);
+                if (headerImage != null) headerImage.setVisibility(View.GONE);
             }
-*/
+
             title.setText(dialogModal.getAppTitle());
             description.setText(dialogModal.getAppDesc());
             if (price != null) {
@@ -285,5 +280,6 @@ public class GoPlayAdsNative {
                 });
             }
         }
+
     }
 }

@@ -1,11 +1,10 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/goplayAds_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,20 +15,18 @@
             android:id="@+id/goplayAds_header_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/header_image"
             android:scaleType="centerCrop"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
-            android:contentDescription="@string/header_image" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/goplayAds_ad_asset_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_below="@+id/goplayAds_header_image"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -50,29 +47,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/goplayAds_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/goplayAds_rating"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:stepSize="0.1"
                         android:isIndicator="true"
-                        style="@style/Widget.AppCompat.RatingBar.Small"/>
+                        android:numStars="5"
+                        android:stepSize="0.1" />
 
                     <TextView
                         android:id="@+id/goplayAds_price"
@@ -85,17 +82,17 @@
         </LinearLayout>
 
         <Button
-            android:layout_below="@id/goplayAds_ad_asset_holder"
             android:id="@+id/goplayAds_cta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_below="@id/goplayAds_ad_asset_holder"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_bg"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:background="@drawable/button_bg"
             android:textSize="12sp" />
 
     </RelativeLayout>

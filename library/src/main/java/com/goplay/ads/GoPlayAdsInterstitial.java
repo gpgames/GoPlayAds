@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class GoPlayAdsInterstitial {
     private final Context mContext;
     private static AdListener mAdListener;
-    private String url;
+    private final String url;
     private int lastLoaded = 0;
 
     private static boolean isAdLoaded = false;
@@ -57,7 +57,6 @@ public class GoPlayAdsInterstitial {
                 if (!result.trim().isEmpty()) setUp(result);
                 else {
                     if (mAdListener != null) mAdListener.onAdLoadFailed(new Exception("Null Response"));
-
                 }
             }).execute();
         }
@@ -93,17 +92,13 @@ public class GoPlayAdsInterstitial {
             if (lastLoaded == modalArrayList.size() - 1) lastLoaded = 0;
             else lastLoaded++;
 
-            Picasso.get()
-                    .load(modal.getInterstitialImageUrl())
-                    .into(new com.squareup.picasso.Target() {
-
+            Picasso.get().load(modal.getInterstitialImageUrl()).into(new com.squareup.picasso.Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap resource, Picasso.LoadedFrom from) {
                     bitmap = resource;
                     if (mAdListener != null) mAdListener.onAdLoaded();
                     isAdLoaded = true;
                 }
-
 
                 @Override
                 public void onBitmapFailed(Exception e, Drawable errorDrawable) {
