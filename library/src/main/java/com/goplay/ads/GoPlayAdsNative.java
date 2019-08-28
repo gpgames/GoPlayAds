@@ -16,9 +16,11 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.palette.graphics.Palette;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -96,7 +98,8 @@ public class GoPlayAdsNative {
         else new JsonPullerTask(jsonUrl, result -> {
             if (!result.trim().isEmpty()) setUp(result);
             else {
-                if (mNativeAdListener != null) mNativeAdListener.onAdLoadFailed(new Exception("Null Response"));
+                if (mNativeAdListener != null)
+                    mNativeAdListener.onAdLoadFailed(new Exception("Null Response"));
 
             }
         }).execute();
@@ -145,7 +148,7 @@ public class GoPlayAdsNative {
 
             TextView title, description, price;
             final View cta;
-            final ImageView icon, headerImage;
+            final ImageView icon;//, headerImage;
             final RatingBar ratings;
 
 
@@ -156,7 +159,7 @@ public class GoPlayAdsNative {
                 price = view.getPriceView();
                 cta = view.getCallToActionView();
                 icon = view.getIconView();
-                headerImage = view.getHeaderImageView();
+                //headerImage = view.getHeaderImageView();
                 ratings = view.getRatingsView();
             } else {
                 if (customNativeView != null) {
@@ -165,10 +168,10 @@ public class GoPlayAdsNative {
                     price = customNativeView.findViewById(R.id.goplayAds_price);
                     cta = customNativeView.findViewById(R.id.goplayAds_cta);
                     icon = customNativeView.findViewById(R.id.goplayAds_app_icon);
-                    headerImage = customNativeView.findViewById(R.id.goplayAds_header_image);
+                    //headerImage = customNativeView.findViewById(R.id.goplayAds_header_image);
                     ratings = customNativeView.findViewById(R.id.goplayAds_rating);
                 } else
-                    throw new NullPointerException("NativeAdView is Null. Either pass HouseAdsNativeView or a View in setNativeAdView()");
+                    throw new NullPointerException("NativeAdView is Null. Either pass GoPlayAdsNativeView or a View in setNativeAdView()");
 
             }
             if (dialogModal.getIconUrl().trim().isEmpty() || !dialogModal.getIconUrl().trim().contains("http"))
@@ -187,7 +190,8 @@ public class GoPlayAdsNative {
                         int dominantColor = palette.getDominantColor(ContextCompat.getColor(mContext, R.color.colorAccent));
 
                         if (cta.getBackground() instanceof ColorDrawable) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) cta.setBackground(new GradientDrawable());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                                cta.setBackground(new GradientDrawable());
                             else cta.setBackgroundDrawable(new GradientDrawable());
                         }
                         GradientDrawable drawable = (GradientDrawable) cta.getBackground();
@@ -210,9 +214,9 @@ public class GoPlayAdsNative {
                 @Override
                 public void onError(Exception e) {
                     isAdLoaded = false;
-                    if (headerImage == null || dialogModal.getLargeImageUrl().isEmpty()) {
-                        if (mNativeAdListener != null) mNativeAdListener.onAdLoadFailed(e);
-                    }
+                    //if (headerImage == null || dialogModal.getLargeImageUrl().isEmpty()) {
+                    //    if (mNativeAdListener != null) mNativeAdListener.onAdLoadFailed(e);
+                    //}
                 }
             });
 
@@ -221,10 +225,10 @@ public class GoPlayAdsNative {
                 Picasso.get().load(dialogModal.getLargeImageUrl()).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        if (headerImage != null) {
-                            headerImage.setVisibility(View.VISIBLE);
-                            headerImage.setImageBitmap(bitmap);
-                        }
+                        //if (headerImage != null) {
+                        //    headerImage.setVisibility(View.VISIBLE);
+                        //    headerImage.setImageBitmap(bitmap);
+                        //}
                         isAdLoaded = true;
                         if (mNativeAdListener != null) mNativeAdListener.onAdLoaded();
                     }
@@ -239,19 +243,20 @@ public class GoPlayAdsNative {
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                     }
                 });
-            else {
-                if (headerImage != null) headerImage.setVisibility(View.GONE);
-            }
+            //else {
+            //if (headerImage != null) headerImage.setVisibility(View.GONE);
+            //}
 
             title.setText(dialogModal.getAppTitle());
             description.setText(dialogModal.getAppDesc());
             if (price != null) {
                 price.setVisibility(View.VISIBLE);
-                if (!dialogModal.getPrice().trim().isEmpty()) price.setText(String.format("Price: %s", dialogModal.getPrice()));
+                if (!dialogModal.getPrice().trim().isEmpty())
+                    price.setText(String.format("Price: %s", dialogModal.getPrice()));
                 else price.setVisibility(View.GONE);
             }
 
-            if (ratings != null ) {
+            if (ratings != null) {
                 ratings.setVisibility(View.VISIBLE);
                 if (dialogModal.getRating() > 0) ratings.setRating(dialogModal.getRating());
                 else ratings.setVisibility(View.GONE);

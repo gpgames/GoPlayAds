@@ -7,7 +7,6 @@
 package com.goplay.ads.listener;
 
 public interface AdListener {
-
     void onAdLoadFailed(Exception e);
     void onAdLoaded();
     void onAdClosed();
