@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.goplay.goplayAds.sample"
         minSdkVersion 14
         //noinspection OldTargetApi
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0.00"
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.0"
     }
 
     buildTypes {
@@ -18,13 +18,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:cardview-v7:26.1.0'
-    //implementation 'com.goplay:goplayAds:1.2'
+    //implementation 'com.github.gpgames:goplayAds:1.0.01'
     implementation project(':library')
 }

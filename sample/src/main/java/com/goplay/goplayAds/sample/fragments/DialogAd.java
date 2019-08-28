@@ -47,7 +47,6 @@ public class DialogAd extends Fragment implements AdListener {
 
         forceRefresh.setChecked(getContext().getSharedPreferences("forceRefresh", Context.MODE_PRIVATE).getBoolean("val", false));
         forceRefresh.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            //noinspection ConstantConditions
             getContext().getSharedPreferences("forceRefresh", Context.MODE_PRIVATE).edit().putBoolean("val", isChecked).apply();
             //noinspection ConstantConditions
             getActivity().recreate();

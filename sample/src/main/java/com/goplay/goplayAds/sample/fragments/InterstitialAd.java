@@ -95,6 +95,7 @@ public class InterstitialAd extends Fragment implements AdListener, BackPressLis
         load.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorAccent)));
         show.setEnabled(false);
         show.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#e5e5e5")));
+        Toast.makeText(mContext, "Ad Closed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -114,7 +115,7 @@ public class InterstitialAd extends Fragment implements AdListener, BackPressLis
 
     @Override
     public void onBackPressed(AppCompatActivity activity) {
-        if (isFromBackPress != null && isFromBackPress.isChecked() && interstitial != null && interstitial.isAdLoaded()) interstitial.show();
+        if (isFromBackPress.isChecked() && interstitial.isAdLoaded()) interstitial.show();
         else activity.finish();
     }
 }
