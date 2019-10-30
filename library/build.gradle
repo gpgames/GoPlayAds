@@ -23,6 +23,10 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.palette:palette:1.0.0'
@@ -36,6 +40,3 @@ dependencies {
 
 apply from: '../install.gradle'
 apply from: '../bintray.gradle'
-repositories {
-    mavenCentral()
-}
