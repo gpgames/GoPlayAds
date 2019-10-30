@@ -1,10 +1,11 @@
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.1.01'
+version = '2.0'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    //classifier = 'sources' //deprecated
+    archiveClassifier.set("sources")
 }
 
 task javadoc(type: Javadoc) {
@@ -13,7 +14,8 @@ task javadoc(type: Javadoc) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    //classifier = 'javadoc' //deprecated
+    archiveClassifier.set("javadoc")
     from javadoc.destinationDir
 }
 artifacts {

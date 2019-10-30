@@ -1,36 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:gravity="center"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/card_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="30dp"
-        android:visibility="gone">
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/useLocalResources"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_gravity="start"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/local_assets" />
 
-            <LinearLayout
-                android:id="@+id/holder_main"
+        <TextView
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/loading"
+            android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="30dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/goplayAds_cta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/holder"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="?colorAccent"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/goplayAds_header_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:id="@+id/holder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/goplayAds_header_image"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
 
@@ -47,20 +90,6 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/goplayAds_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/goplayAds_description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -84,45 +113,39 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp" />
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/goplayAds_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/goplayAds_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <Button
-                android:id="@+id/goplayAds_cta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/holder_main"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="?colorAccent"
-                android:gravity="center"
-                android:textColor="#fff"
-                android:textSize="12sp" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/loading"
-        android:visibility="gone" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/load"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:text="@string/load_native_ad"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:theme="@style/Theme.MaterialComponents"
-        app:backgroundTint="@color/colorAccent"
-        app:cornerRadius="20dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/load"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="@string/load_native_ad"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:theme="@style/Theme.MaterialComponents"
+            app:backgroundTint="@color/colorAccent"
+            app:cornerRadius="20dp" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
