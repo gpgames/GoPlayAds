@@ -4,8 +4,7 @@ version = '2.0'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    //classifier = 'sources' //deprecated
-    archiveClassifier.set("sources")
+    classifier = 'sources'
 }
 
 task javadoc(type: Javadoc) {
@@ -14,8 +13,7 @@ task javadoc(type: Javadoc) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    //classifier = 'javadoc' //deprecated
-    archiveClassifier.set("javadoc")
+    classifier = 'javadoc'
     from javadoc.destinationDir
 }
 artifacts {
