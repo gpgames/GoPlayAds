@@ -1,36 +1,36 @@
 {
  "apps":
 [{
-  "app_title": "Example App",
-  "app_desc": "This is an Example Ad..",
-  "app_icon": "https://lh3.googleusercontent.com/V_rwOqRNtWEIt45uuYysCn1f9EM4MCO8MYUPM4wM9lkxCSKhW4IpV2ODY6nKadEn_0c=s200-rw",
-  "app_header_image": "https://lz-houseads.firebaseapp.com/houseAds/imgs/focus_banner.png",
-  "app_uri": "com.example",
-  "app_rating": "4.3",
-  "app_cta_text": "Install",
-  "app_price": "Free",
+  "app_title": "Fairy Princess",
+  "app_desc": "Kids puzzles just for Disney Fans!",
+  "app_icon": "https://lh3.googleusercontent.com/KS2RxBt27zaaXS_3_A26rd513n5Sx4HtuU_EjX_cQZ7nGb8DGbjUMIjn2y7FL5QaGFk=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/paLgmH5xDz7IhYYR_wECgCjuOPAvIEbk-FjXjIUYr0bPtrxBY4XnmdoYg3RL4or-I5Gk=w1024-h500",
+  "app_uri": "gplay.gamesforkids.kidspuzzles.princess",
+  "app_rating": "5.0",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
   "app_adType": "native"
 },
 {
-  "app_title": "Status Saver",
-  "app_desc": "An Easy, Fast & Simple App to save WhatsApp Image & Video Statuses ",
-  "app_icon": "https://lh3.googleusercontent.com/A81EGvZRbDuDgoTdahsJe5CiPXbfTHn2im38NkBkMXtu9ZXYBG7G9Bwr8TJ5Ic8QZA=s200-rw",
-  "app_header_image": "https://lz-houseads.firebaseapp.com/houseAds/imgs/status_saver_banner.jpg",
-  "app_uri": "com.lazygeniouz.saveit",
-  "app_rating": "4.6",
-  "app_cta_text": "Install",
-  "app_price": "Free",
+  "app_title": "Cute The Rope",
+  "app_desc": "Red Pou is your new adventure friend!",
+  "app_icon": "https://lh3.googleusercontent.com/eq4gsyPF-0V_aDUY5mjLsSVSqPGk8v_eQmH2IFuFw09TcArZsLzEdC7P6jTlZJtevMvl=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/rXMbIb6XJkS3CciqKbh-4T9vkS6S-DuXLRQwouniF6KBAdCrx1G5PWkdCSRUNAlxGW8O=w1024-h500",
+  "app_uri": "com.tonagames.candy.cutrope",
+  "app_rating": "4.8",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
   "app_adType": "native"
 },
 {
-  "app_title": "TexWalls!",
-  "app_desc": "A Simple App to create Simplistic Text Based Wallpapers!",
-  "app_icon": "https://lh3.googleusercontent.com/eySkKspHqCJ7tWH9OUq6mRMNeXIiabfDjJmhJGHwV02aa9_I4DtTmVzH7gygS_CVEm8=s200-rw",
-  "app_header_image": "https://lz-houseads.firebaseapp.com/houseAds/imgs/texwalls_banner.png",
-  "app_uri": "com.lazygeniouz.tex",
+  "app_title": "King of Math",
+  "app_desc": "Improve your skills, exercise your mind!",
+  "app_icon": "https://lh3.googleusercontent.com/b5Sf-zjg9fwxqwoMlYBrJHaKSqw2J3c8-Y6O-VqzLfTiBMp8TcrfGXF0ZPBt2QPOyQ=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/YHbkquYAIkrKyOh47m9Yau-OTWVl2-1q7PV3wqI0-reFUTJRffwlZpUD9jvEid9p5Q=w1024-h500",
+  "app_uri": "com.tonagames.mathgame",
   "app_rating": "4.7",
-  "app_cta_text": "Install",
-  "app_price": "Free",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
   "app_adType": "native"
 },
 
@@ -47,11 +47,14 @@
 },
 
 {
-  "app_title": "LaZy",
-  "app_desc": "Example of Website Ad.",
-  "app_icon": "https://www.lazygeniouz.com/wp-content/uploads/2018/05/lz.png",
-  "app_uri": "https://www.lazygeniouz.com",
-  "app_cta_text": "Check Out Now!",
+  "app_title": "Princess Puzzles",
+  "app_desc": "The best disney wallpapers, just for Fans!",
+  "app_icon": "https://lh3.googleusercontent.com/h5FORfbGAD1iaOUoY8VegaJSAzqVBwDvXk80T4axjp9k1do_QzXuKVwAkaVbGBnkjg=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/paLgmH5xDz7IhYYR_wECgCjuOPAvIEbk-FjXjIUYr0bPtrxBY4XnmdoYg3RL4or-I5Gk=w1024-h500",
+  "app_uri": "gplay.gamesforkids.jigsawpuzzle.princess",
+  "app_rating": "5.0",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
   "app_adType": "native"
 }
 ]
