@@ -1,0 +1,26 @@
+{
+  "apps":
+ [{
+  "app_title": "Princess Puzzles",
+  "app_desc": "The best disney wallpapers, just for Fans!",
+  "app_icon": "https://lh3.googleusercontent.com/h5FORfbGAD1iaOUoY8VegaJSAzqVBwDvXk80T4axjp9k1do_QzXuKVwAkaVbGBnkjg=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/paLgmH5xDz7IhYYR_wECgCjuOPAvIEbk-FjXjIUYr0bPtrxBY4XnmdoYg3RL4or-I5Gk=w1024-h500",
+  "app_uri": "gplay.gamesforkids.jigsawpuzzle.princess",
+  "app_rating": "5.0",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
+  "app_adType": "native"
+ },
+ {
+  "app_title": "Fairy Princess",
+  "app_desc": "Kids puzzles just for Disney Fans!",
+  "app_icon": "https://lh3.googleusercontent.com/KS2RxBt27zaaXS_3_A26rd513n5Sx4HtuU_EjX_cQZ7nGb8DGbjUMIjn2y7FL5QaGFk=s200-rw",
+  "app_header_image": "https://lh3.googleusercontent.com/paLgmH5xDz7IhYYR_wECgCjuOPAvIEbk-FjXjIUYr0bPtrxBY4XnmdoYg3RL4or-I5Gk=w1024-h500",
+  "app_uri": "gplay.gamesforkids.kidspuzzles.princess",
+  "app_rating": "5.0",
+  "app_cta_text": "PLAY",
+  "app_price": "FREE",
+  "app_adType": "native"
+ }
+]
+}
