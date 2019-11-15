@@ -14,7 +14,7 @@
 {
   "app_title": "Cute The Rope",
   "app_desc": "Red Pou is your new adventure friend!",
-  "app_icon": "https://lh3.googleusercontent.com/eq4gsyPF-0V_aDUY5mjLsSVSqPGk8v_eQmH2IFuFw09TcArZsLzEdC7P6jTlZJtevMvl=s200-rw",
+  "app_icon": "https://lh3.googleusercontent.com/YXqcDk9Kzi9tVUiQlVi5E2h3dbsM_5ctBg4DdcEHoSpLlmHBxYTs7W3fjm0EcUBdxcY=s200-rw",
   "app_header_image": "https://lh3.googleusercontent.com/rXMbIb6XJkS3CciqKbh-4T9vkS6S-DuXLRQwouniF6KBAdCrx1G5PWkdCSRUNAlxGW8O=w1024-h500",
   "app_uri": "com.tonagames.candy.cutrope",
   "app_rating": "4.8",
@@ -23,11 +23,11 @@
   "app_adType": "native"
 },
 {
-  "app_title": "King of Math",
-  "app_desc": "Improve your skills, exercise your mind!",
-  "app_icon": "https://lh3.googleusercontent.com/b5Sf-zjg9fwxqwoMlYBrJHaKSqw2J3c8-Y6O-VqzLfTiBMp8TcrfGXF0ZPBt2QPOyQ=s200-rw",
+  "app_title": "Snake vs Block 3D",
+  "app_desc": "Become a strong snake like Hulk.",
+  "app_icon": "https://lh3.googleusercontent.com/0mstW6AlU32DZ5ig6MzsOq6N0FW_afA-ERinVfLeDU_nOFBgjva8FzHSKbRwCeUWT8sq=s200-rw",
   "app_header_image": "https://lh3.googleusercontent.com/YHbkquYAIkrKyOh47m9Yau-OTWVl2-1q7PV3wqI0-reFUTJRffwlZpUD9jvEid9p5Q=w1024-h500",
-  "app_uri": "com.tonagames.mathgame",
+  "app_uri": "com.tonagames.snake",
   "app_rating": "4.7",
   "app_cta_text": "PLAY",
   "app_price": "FREE",
