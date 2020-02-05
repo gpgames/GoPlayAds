@@ -97,17 +97,14 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
                         if (result.trim().isNotEmpty()) {
                             jsonRawResponse = result
                             configureAds(result)
-                        }
-                        else {
+                        } else {
                             mNativeAdListener?.onAdLoadFailed(Exception(context.getString(R.string.error_null_response)))
                         }
                     }
 
                 }).execute()
-            }
-            else configureAds(jsonRawResponse)
-        }
-        else configureAds(jsonLocalRawResponse)
+            } else configureAds(jsonRawResponse)
+        } else configureAds(jsonLocalRawResponse)
         return this
     }
 
@@ -121,10 +118,15 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
             for (childObject in 0 until array.length()) {
                 val jsonObject = array.getJSONObject(childObject)
                 if (hideIfAppInstalled && !jsonObject.optString("app_uri").hasHttpSign && GoPlayAdsHelper.isAppInstalled(context, jsonObject.optString("app_uri"))) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) array.remove(childObject)
-                    else RemoveJsonObjectCompat(childObject, array).execute()
-                }
-                else {
+/*
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        array.remove(childObject)
+                    } else {
+                        RemoveJsonObjectCompat(childObject, array).execute()
+                    }
+*/                  RemoveJsonObjectCompat(childObject, array).execute()
+
+                } else {
                     //We Only Add Native Ones!
                     if (jsonObject.optString("app_adType") == "native") {
                         val dialogModal = DialogModal()
@@ -189,8 +191,7 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
                 require(!(iconUrl.trim().isEmpty() || !iconUrl.trim().hasHttpSign)) { context.getString(R.string.error_icon_url_null) }
                 require(!(largeImageUrl.trim().isNotEmpty() && !largeImageUrl.trim().hasHttpSign)) { context.getString(R.string.error_header_image_url_null) }
                 require(!(dialogModal.appTitle!!.trim().isEmpty() || dialogModal.appDesc!!.trim().isEmpty())) { context.getString(R.string.error_title_description_null) }
-            }
-            else {
+            } else {
                 if (iconUrl.trim().isNotEmpty()) {
                     when {
                         iconUrl.trim().startsWith("http") -> Log.d(TAG, "App Logo param starts with `http://`")
@@ -265,8 +266,7 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
 
                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                 })
-            }
-            else headerImage?.visibility = View.GONE
+            } else headerImage?.visibility = View.GONE
 
             title!!.text = dialogModal.appTitle
             description!!.text = dialogModal.appDesc

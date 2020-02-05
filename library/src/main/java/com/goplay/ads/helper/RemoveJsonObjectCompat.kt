@@ -1,3 +1,9 @@
+/*
+ * Created by Darshan Pandya.
+ * @itznotabug
+ * Copyright (c) 2018.
+ */
+
 package com.goplay.ads.helper
 
 import android.os.AsyncTask
