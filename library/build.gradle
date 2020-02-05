@@ -7,7 +7,7 @@ android {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 28
-        versionCode 107
+        versionCode 10
         versionName "2.1"
     }
     buildTypes {
@@ -20,6 +20,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/library_release.kotlin_module'
+        pickFirst 'META-INF/kotlinx-io.kotlin_module'
     }
 }
 
@@ -36,6 +41,7 @@ dependencies {
 
 apply from: '../install.gradle'
 apply from: '../bintray.gradle'
+
 repositories {
     mavenCentral()
 }
