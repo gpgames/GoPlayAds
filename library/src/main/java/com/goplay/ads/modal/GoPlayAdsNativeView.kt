@@ -1,9 +1,3 @@
-/*
- * Created by Darshan Pandya.
- * @itznotabug
- * Copyright (c) 2018.
- */
-
 package com.goplay.ads.modal
 
 import android.view.View

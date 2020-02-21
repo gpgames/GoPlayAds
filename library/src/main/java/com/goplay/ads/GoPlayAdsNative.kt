@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -115,10 +114,11 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
             val rootObject = JSONObject(response)
             val array = rootObject.optJSONArray("apps")
 
-            for (childObject in 0 until array.length()) {
-                val jsonObject = array.getJSONObject(childObject)
-                if (hideIfAppInstalled && !jsonObject.optString("app_uri").hasHttpSign && GoPlayAdsHelper.isAppInstalled(context, jsonObject.optString("app_uri"))) {
-/*
+            if(array != null){ //gplay
+                for (childObject in 0 until array.length()) {
+                    val jsonObject = array.getJSONObject(childObject)
+                    if (hideIfAppInstalled && !jsonObject.optString("app_uri").hasHttpSign && GoPlayAdsHelper.isAppInstalled(context, jsonObject.optString("app_uri"))) {
+/* //gplay
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         array.remove(childObject)
                     } else {
@@ -126,23 +126,25 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
                     }
 */                  RemoveJsonObjectCompat(childObject, array).execute()
 
-                } else {
-                    //We Only Add Native Ones!
-                    if (jsonObject.optString("app_adType") == "native") {
-                        val dialogModal = DialogModal()
-                        dialogModal.appTitle = jsonObject.optString("app_title")
-                        dialogModal.appDesc = jsonObject.optString("app_desc")
-                        dialogModal.iconUrl = jsonObject.optString("app_icon")
-                        dialogModal.largeImageUrl = jsonObject.optString("app_header_image")
-                        dialogModal.callToActionButtonText = jsonObject.optString("app_cta_text")
-                        dialogModal.packageOrUrl = jsonObject.optString("app_uri")
-                        dialogModal.setRating(jsonObject.optString("app_rating"))
-                        dialogModal.price = jsonObject.optString("app_price")
+                    } else {
+                        //We Only Add Native Ones!
+                        if (jsonObject.optString("app_adType") == "native") {
+                            val dialogModal = DialogModal()
+                            dialogModal.appTitle = jsonObject.optString("app_title")
+                            dialogModal.appDesc = jsonObject.optString("app_desc")
+                            dialogModal.iconUrl = jsonObject.optString("app_icon")
+                            dialogModal.largeImageUrl = jsonObject.optString("app_header_image")
+                            dialogModal.callToActionButtonText = jsonObject.optString("app_cta_text")
+                            dialogModal.packageOrUrl = jsonObject.optString("app_uri")
+                            dialogModal.setRating(jsonObject.optString("app_rating"))
+                            dialogModal.price = jsonObject.optString("app_price")
 
-                        modalList.add(dialogModal)
+                            modalList.add(dialogModal)
+                        }
                     }
                 }
             }
+
 
         } catch (jsonException: JSONException) {
             jsonException.printStackTrace()
@@ -313,6 +315,6 @@ class GoPlayAdsNative(private val context: Context, private val jsonUrl: String)
     }
 
     private companion object {
-        private val TAG = GoPlayAdsNative::class.java.simpleName.toString()
+        private val TAG = GoPlayAdsNative::class.java.simpleName
     }
 }

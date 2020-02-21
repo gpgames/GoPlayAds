@@ -1,9 +1,3 @@
-/*
- * Created by Darshan Pandya.
- * @itznotabug
- * Copyright (c) 2018.
- */
-
 package com.goplay.ads
 
 import android.app.Activity
@@ -80,15 +74,16 @@ class GoPlayAdsInterstitial(private val context: Context, private val jsonUrl: S
         try {
             val rootObject = JSONObject(jsonResponse)
             val array = rootObject.optJSONArray("apps")
+            if (array != null) {
+                for (childObject in 0 until array.length()) {
+                    val jsonObject = array.getJSONObject(childObject)
 
-            for (childObject in 0 until array.length()) {
-                val jsonObject = array.getJSONObject(childObject)
-
-                if (jsonObject.optString("app_adType") == "interstitial") {
-                    val interstitialModal = InterstitialModal()
-                    interstitialModal.interstitialImageUrl = jsonObject.optString("app_interstitial_url")
-                    interstitialModal.packageOrUrl = jsonObject.optString("app_uri")
-                    modalArrayList.add(interstitialModal)
+                    if (jsonObject.optString("app_adType") == "interstitial") {
+                        val interstitialModal = InterstitialModal()
+                        interstitialModal.interstitialImageUrl = jsonObject.optString("app_interstitial_url")
+                        interstitialModal.packageOrUrl = jsonObject.optString("app_uri")
+                        modalArrayList.add(interstitialModal)
+                    }
                 }
             }
 
@@ -201,6 +196,7 @@ class GoPlayAdsInterstitial(private val context: Context, private val jsonUrl: S
         private var isAdLoaded = false
         private var bitmap: Bitmap? = null
         private var packageName: String? = null
-        private val TAG = GoPlayAdsInterstitial::class.java.simpleName.toString()
+        //private val TAG = GoPlayAdsInterstitial::class.java.simpleName.toString()
+        private val TAG = GoPlayAdsInterstitial::class.java.simpleName
     }
 }

@@ -1,9 +1,3 @@
-/*
- * Created by Darshan Pandya.
- * @itznotabug
- * Copyright (c) 2018-2019.
- */
-
 package com.goplay.ads.helper
 
 import android.content.ContentResolver
@@ -39,10 +33,9 @@ object GoPlayAdsHelper {
                     .header("Accept-Language", "en-US,en;q=0.8,ru;q=0.6")
                     .get()
         } catch (e: IOException) {
-            Log.e("GoPlayAds", e.message)
+           // Log.e("GoPlayAds", e.message)
             e.printStackTrace()
         }
-
 
         return if (doc != null)
             doc.body().text()
